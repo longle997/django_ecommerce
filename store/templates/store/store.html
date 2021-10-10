@@ -1,0 +1,26 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+    {% comment %} bootstrap row {% endcomment %}
+	<div class="row">
+		{% for product in products %}
+		<div class="col-lg-4">
+            {% comment %} thumbnail is internal css rule {% endcomment %}
+			{% comment %} product.image only show the name of image {% endcomment %}
+			<img class="thumbnail" src="{{ product.image.url }}">
+			<div class="box-element product">
+				<h6><strong>{{ product.name }}</strong></h6>
+				<hr>
+
+				<button data-product={{ product.id }} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+                {% comment %} btn-outline-success is color of btn {% endcomment %}
+				<a class="btn btn-outline-success" href="#">View</a>
+                {% comment %} make $20 display inline with above component and also float on the right of parent div {% endcomment %}
+				<h4 style="display: inline-block; float: right"><strong>${{ product.price }}</strong></h4>
+
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+{% endblock content %}

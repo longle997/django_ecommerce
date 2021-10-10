@@ -1,0 +1,59 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="box-element">
+                {% comment %} &#x2190; is the left arrow {% endcomment %}
+				<a  class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190; Continue Shopping</a>
+
+				<br>
+				<br>
+                {% comment %} table is internal css rule {% endcomment %}
+				<table class="table">
+					<tr>
+						<th><h5>Items: <strong>{{ order.get_total_order_items }}</strong></h5></th>
+						<th><h5>Total:<strong> ${{ order.get_total_price }}</strong></h5></th>
+						{% if order.get_total_order_items > 0 %}
+							<th>
+								<a  style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Checkout</a>
+							</th>
+						{% endif %}
+					</tr>
+				</table>
+
+			</div>
+
+			<br>
+			<div class="box-element">
+                {% comment %} these are title for cart item {% endcomment %}
+				<div class="cart-row">
+                    {% comment %} if this row is devied into 7 parts this div will take 2 parts {% endcomment %}
+					<div style="flex:2"></div>
+					<div style="flex:2"><strong>Item</strong></div>
+					<div style="flex:1"><strong>Price</strong></div>
+					<div style="flex:1"><strong>Quantity</strong></div>
+					<div style="flex:1"><strong>Total</strong></div>
+				</div>
+				{% comment %} these are value for cart item {% endcomment %}
+				{% for order_item in order_items %}
+					<div class="cart-row">
+						<div style="flex:2"><img class="row-image" src="{{ order_item.product.image.url }}"></div>
+						<div style="flex:2"><h5>{{ order_item.product.name }}</h5></div>
+						<div style="flex:1"><h5>${{ order_item.product.price }}</h5></div>
+						<div style="flex:1">
+							<h5 class="quantity">{{ order_item.quantity }}</h5>
+							<div class="quantity">
+								{% comment %} seperate image component to use it for modify purpose {% endcomment %}
+								<img data-product={{ order_item.product.id }} data-action="add" class="chg-quantity update-cart" src="{% static  'image/arrow-up.png' %}">
+
+								<img data-product={{ order_item.product.id }} data-action="remove" class="chg-quantity update-cart" src="{% static  'image/arrow-down.png' %}">
+							</div>
+						</div>
+						<div style="flex:1"><h5>${{ order_item.get_total }}</h5></div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% endblock content %}
