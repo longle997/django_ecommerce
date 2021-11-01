@@ -1,6 +1,7 @@
 import json
 
 from datetime import datetime
+from django.http.response import Http404
 from django.shortcuts import render
 from django.http import JsonResponse
 
@@ -175,3 +176,12 @@ def processOrder(request):
             )
 
     return JsonResponse('Payment submitted..', safe=False)
+
+
+def detail(request, pk):
+    try:
+        product = Product.objects.get(pk=pk)
+    except Product.DoesNotExist:
+        raise Http404(f"product with  id {pk} does not exist!")
+
+    return render(request, template_name="store/product_detail.html", context={"product": product})

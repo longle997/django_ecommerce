@@ -14,7 +14,7 @@
 
 				<button data-product={{ product.id }} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
                 {% comment %} btn-outline-success is color of btn {% endcomment %}
-				<a class="btn btn-outline-success" href="#">View</a>
+				<a class="btn btn-outline-success" href="{% url 'detail' product.id %}">View</a>
                 {% comment %} make $20 display inline with above component and also float on the right of parent div {% endcomment %}
 				<h4 style="display: inline-block; float: right"><strong>${{ product.price }}</strong></h4>
 

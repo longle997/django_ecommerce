@@ -1,0 +1,10 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+    <h2><strong>{{ product.name }}</strong></h2>
+    {% comment %} thumbnail is internal css rule {% endcomment %}
+    {% comment %} product.image only show the name of image {% endcomment %}
+    <img src="{{ product.image.url }}">
+    <h4 style="display: inline-block; float: right"><strong>${{ product.price }}</strong></h4>
+
+{% endblock content %}
