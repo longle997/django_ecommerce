@@ -1,13 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-
+class CustomUser(AbstractUser):
+    is_email_valid = models.BooleanField(default=False)
 
 class Customer(models.Model):
     # one user can only be a customer
     user = models.OneToOneField(
-        User, null=True, blank=True, on_delete=models.CASCADE)
+        CustomUser, null=True, blank=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=True)
     email = models.CharField(max_length=200)
 
@@ -41,6 +42,8 @@ class Order(models.Model):
 
     @property
     def get_total_order_items(self):
+        # Those are reverse foreign key lookups. The {field_name}_set pattern is what Django uses by default if you don't define a different term yourself.
+        # Returns all orderitem objects related to order.
         order_items = self.orderitem_set.all()
         total_order_items = sum(item.quantity for item in order_items)
         return total_order_items

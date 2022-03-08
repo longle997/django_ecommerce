@@ -11,7 +11,7 @@
 			<div class="box-element product">
 				<h6><strong>{{ product.name }}</strong></h6>
 				<hr>
-
+				{% comment %} when user hit this button, updateBtns in file cart.js will be updated {% endcomment %}
 				<button data-product={{ product.id }} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
                 {% comment %} btn-outline-success is color of btn {% endcomment %}
 				<a class="btn btn-outline-success" href="{% url 'detail' product.id %}">View</a>

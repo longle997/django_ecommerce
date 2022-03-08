@@ -1,4 +1,4 @@
-// look for all element with class update-cart
+// look for all element with class update-cart, which is from store.html and cart.html
 var updateBtns = document.getElementsByClassName('update-cart')
 
 for (i = 0; i < updateBtns.length; i++) {
@@ -23,7 +23,7 @@ function updateUserOrder(productId, action) {
     console.log("User is authenticated, sending data ...")
 
     // url that we wanna send request
-    var url = 'update-item/'
+    var url = 'cart/update-item/'
 
     fetch(url, {
         method: 'POST',
@@ -54,6 +54,7 @@ function updateCookieOrder(productId, action) {
             cart[productId]["quantity"] += 1
         }
     } else {
+        // no need to check cart[productId] is defined or not, because the "remove" action can only be used when product is exist
         cart[productId]["quantity"] -= 1
         if (cart[productId]["quantity"] <= 0) {
             console.log("Remove cart item: ", cart[productId])

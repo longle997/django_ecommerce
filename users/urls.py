@@ -1,9 +1,10 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import register
+from .views import register, validate_email
 
 urlpatterns = [
     path('register/', register, name='register'),
+    path('validate_email/', validate_email, name='validate_email'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
     # this url will send user to password_reset.html template

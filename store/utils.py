@@ -1,5 +1,5 @@
 import json
-from .models import Customer, Product, Order, User
+from .models import Customer, Product, Order, CustomUser
 
 
 def cookieCart(request):
@@ -9,15 +9,22 @@ def cookieCart(request):
              "get_total_price": 0, "shipping": False}
 
     try:
+        # request.COOKIES['cart'] was updated by Add to Cart from store template
         cart = json.loads(request.COOKIES['cart'])
     except:
         # try to avoid error case when cookie is empty
         cart = {}
 
+    # cart now is a json object, which contain {"{productId}: {quantity}", "{productId}: {quantity}", ...}
+    # loop through all products in cart
     for k, v in cart.items():
         try:
+            # sum of all product's quantity
+            # not relating to model property because this is just a dictionary
             order["get_total_order_items"] += v["quantity"]
+            # get product data by productId
             product = Product.objects.get(id=k)
+            # calculate order total price
             order["get_total_price"] += (product.price * v["quantity"])
 
             item = {
@@ -38,6 +45,7 @@ def cookieCart(request):
         except:
             # if the item is in cookie and it also was deleted from DB => error case
             # this except is to avoid that case
+            # error will come from "product = Product.objects.get(id=k)"
             pass
 
     return {"order": order, "order_items": order_items}
@@ -46,13 +54,14 @@ def cookieCart(request):
 def cartData(request):
     data = {}
 
+    # is_authenticated is the read-only attribute, This is a way to tell if the user has been authenticated.
     if request.user.is_authenticated:
         try:
             # because customer is one to one field of user model, so from user model we can refer to customer model
             customer = request.user.customer
         except:
             # make current user become customer if they are not
-            user = User.objects.get(username=request.user)
+            user = CustomUser.objects.get(username=request.user)
 
             # when create new customer => it will return a tuple (<Customer: longle>, True)
             # so we need to access first element in order to actually use customer object

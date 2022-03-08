@@ -52,6 +52,7 @@
 		    // Return null if not found
 		    return null;
 		}
+        {% comment %} cart var from cookie was updated from function updateCookieOrder {% endcomment %}
 		var cart = JSON.parse(getCookie('cart'))
 
         if (cart == undefined){

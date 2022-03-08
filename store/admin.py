@@ -4,9 +4,11 @@ from .models import (
     Product,
     Order,
     OrderItem,
-    ShippingAddress
+    ShippingAddress,
+    CustomUser
 )
 
+admin.site.register(CustomUser)
 admin.site.register(Customer)
 admin.site.register(Product)
 admin.site.register(Order)

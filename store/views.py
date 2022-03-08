@@ -10,7 +10,11 @@ from .utils import cartData, cookieCart
 
 
 def store(request):
+    """
+        This view arm to get cart data from request and products data from DB and display them on web page
+    """
     products = Product.objects.all()
+    # get order info from request in order to update the cart
     data = cartData(request)
     order = data["order"]
 
@@ -24,6 +28,9 @@ def store(request):
 
 
 def cart(request):
+    """
+        This view arm to get cart data from request and display them on web page
+    """
     data = cartData(request)
 
     order = data["order"]

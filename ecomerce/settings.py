@@ -61,7 +61,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media')
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "django",
+        "NAME": "django_ecommerce",
         "USER": "postgres",
         "PASSWORD": "password",
         "HOST": "localhost",
@@ -83,4 +83,16 @@ if ENVIRONMENT == 'production':
 
 LOGIN_REDIRECT_URL = '/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER='minhnhat160297@gmail.com'
+EMAIL_HOST_PASSWORD='ghismwcbbszbuyoo'
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_USE_SSL=False
+
+REDIS_PORT = 6379
+REDIS_HOST = 'localhost'
+
+# in order to change User model
+AUTH_USER_MODEL = "store.CustomUser"

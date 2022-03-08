@@ -3,12 +3,13 @@ this file is used to declare form, modify exist form of django
 '''
 
 from django import forms
-from django.contrib.auth.models import User
+from store.models import CustomUser as User
 from django.contrib.auth.forms import UserCreationForm
 
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
+    # is_active = forms.BooleanField(initial=False)
 
     class Meta:
         model = User
@@ -29,3 +30,12 @@ class UserUpdateForm(forms.ModelForm):
 # 	class Meta:
 # 		model = Profile
 # 		fields = ['image']
+
+
+class UserActivateForm(forms.ModelForm):
+    email = forms.EmailField()
+    activation_code = forms.CharField()
+
+    class Meta:
+        model = User
+        fields = ['email']
